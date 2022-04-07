@@ -1,65 +1,71 @@
 import React, { Component } from 'react'
-import "./Login.css" 
+import "./Login.css"
 import axios from 'axios'
- class ContactForm extends Component {
-   constructor(props){
-     super(props)
-     this.state={
-       name: '',
-       address:'',
-       email:'',
-       jobstatus:'',
-       like:''
-     }
-   }
-   changeHandler=(e)=>{
-     this.setState({[e.target.name]: e.target.value})
-   }
-   submitHandler= e =>{
-     e.preventDefault()
-     console.log(this.state)
-     axios.post("https://intern-api.engineerscradle.com/", this.state)
-     .then(response=>{
-       console.log(response)
-     })
-     .catch(error =>{
-       console.log(error)
-     })
-   }
+import { useEffect, useState } from "react";
+class ContactForm extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      address: '',
+      email: '',
+      jobstatus: '',
+      like: '',
+    }
+  }
+  changeHandler = (e) => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+  submitHandler = e => {
+    e.preventDefault()
+    console.log(this.state)
+    const headers = [
+      ['secret-key', 'c324sde45'],
+      ["Accept", "application/json;charset=utf-8"],
+    ];
+    axios.post("https://intern-api.engineerscradle.com/api/ft/task1/add", this.state, { headers})
+      .then(response => {
+        console.log('success')
+        console.log(response)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
   render() {
-    const{name,address,email,jobstatus,like}=this.state
+    const { name, address, email, jobstatus, like } = this.state
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-        <div className="field">
-         <label htmlFor="name">Name:</label>
-      <input type="text" id="name" name="name" className="in" value={name} onChange={this.changeHandler} required />
-       </div>
-       <div className="field">
-         <label htmlFor="address">Address:</label>
-         <input type="text" id="address" name="address" className="in" value={address} onChange={this.changeHandler} required />
-       </div>
-       <div className="field">
-         <label htmlFor="email">Email:</label>
-         <input type="email" id="email" name="email" className="in" value={email} onChange={this.changeHandler} required />
-       </div>
-       <div className="field">
-         <label htmlFor="jobstatus">JobStatus:</label>
-         <select className="in">
-           <option name="jobstatus" value={jobstatus}>Student</option>
-           <option name="jobstatus" value={jobstatus}>Unemployed</option>
-           <option name="jobstatus" value={jobstatus}>Working</option>
-           <option name="jobstatus" value={jobstatus}>Retired</option>
-         </select>
-       </div>
-       <div className="field">
-         <label htmlFor="like">DoLiketoCode:</label>
-         <div className="in">
-         <input type="radio" name="answer" value={like} onChange={this.changeHandler}/> Yes
-         <input type="radio" name="answer" value={like} onChange={this.changeHandler}/> Not this time
-         </div>
-       </div>
-       <button type="submit">Submit</button>
+          <div className="field">
+            <label htmlFor="name">Name:</label>
+            <input type="text" id="name" name="name" className="in" value={name} onChange={this.changeHandler} required />
+          </div>
+          <div className="field">
+            <label htmlFor="address">Address:</label>
+            <input type="text" id="address" name="address" className="in" value={address} onChange={this.changeHandler} required />
+          </div>
+          <div className="field">
+            <label htmlFor="email">Email:</label>
+            <input type="email" id="email" name="email" className="in" value={email} onChange={this.changeHandler} required />
+          </div>
+          <div className="field">
+            <label htmlFor="jobstatus">JobStatus:</label>
+            <select className="in">
+              <option name="jobstatus" value={jobstatus}>Student</option>
+              <option name="jobstatus" value={jobstatus}>Unemployed</option>
+              <option name="jobstatus" value={jobstatus}>Working</option>
+              <option name="jobstatus" value={jobstatus}>Retired</option>
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor="like">DoLiketoCode:</label>
+            <div className="in">
+              <input type="radio" name="answer" value={like} onChange={this.changeHandler} /> Yes
+              <input type="radio" name="answer" value={like} onChange={this.changeHandler} /> Not this time
+            </div>
+          </div>
+          <button type="submit">Submit</button>
         </form>
       </div>
     )
@@ -95,6 +101,7 @@ export default ContactForm
 //     let response = await fetch("https://intern-api.engineerscradle.com/api/ft/", {
 //       method: "POST",
 //       headers: {
+//         'secret-key': 'c324sde45',
 //         "Content-Type": "application/json;charset=utf-8",
 //       },
 //       body: JSON.stringify(details),
