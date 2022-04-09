@@ -11,9 +11,11 @@ state = {
 }
 
 componentDidMount() {
- const token="v3p42mqQDWrg9j4gvbTrxT808n30vr5483"
+ const token="v3p42mqQDWrg9j4gvbTrxT808n30vr5483";
    fetch('https://intern-api.engineerscradle.com/api/ft/task2/view/c324sde45', {
-    headers: {"Authorization": `Bearer ${token}`}
+    headers: {
+      Authorization: `token ${token}`
+    }
   }) .then((response) => response.json())
   .then(json => console.log(json))
   .then(usersList => {
